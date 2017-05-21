@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 __author__ = 'isee15'
 
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import datetime
 from pprint import pprint
 
-from LunarSolarConverter import LunarSolarConverter, Solar
+from .LunarSolarConverter import LunarSolarConverter, Solar
 
 
 startDateStr = '01/01/1900'
@@ -17,7 +17,7 @@ converter = LunarSolarConverter()
 while curDate < endDate:
     solar = Solar(curDate.year, curDate.month, curDate.day)
     # pprint(vars(solar))
-    ret = urllib2.urlopen(
+    ret = urllib.request.urlopen(
         'http://localhost:1337/?src={},{},{}'.format(solar.solarYear, solar.solarMonth, solar.solarDay)).read();
     lunar = converter.SolarToLunar(solar)
     if ret != '{},{},{},{:d}'.format(lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay, lunar.isleap):
@@ -25,7 +25,7 @@ while curDate < endDate:
         print(ret)
     solar = converter.LunarToSolar(lunar)
 
-    ret = urllib2.urlopen(
+    ret = urllib.request.urlopen(
         'http://localhost:1337/?src={},{},{},{:d}'.format(lunar.lunarYear, lunar.lunarMonth, lunar.lunarDay,
                                                           lunar.isleap)).read();
     if ret != '{},{},{}'.format(solar.solarYear, solar.solarMonth, solar.solarDay):
@@ -34,4 +34,4 @@ while curDate < endDate:
 
     curDate = curDate + datetime.timedelta(days=1)
 
-print "Check Done"
+print("Check Done")

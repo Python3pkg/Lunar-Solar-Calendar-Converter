@@ -4,7 +4,7 @@ __author__ = 'isee15'
 
 from pprint import pprint
 
-from LunarSolarConverter import LunarSolarConverter
+from .LunarSolarConverter import LunarSolarConverter
 
 converter = LunarSolarConverter.LunarSolarConverter()
 
